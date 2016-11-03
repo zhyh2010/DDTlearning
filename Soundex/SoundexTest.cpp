@@ -33,6 +33,18 @@ TEST_F(SoundexEncoding, LimitsLengthToFourCharacters){
 	ASSERT_EQ(soundex.encode("Dcdlb").length(), 4u);
 }
 
+TEST_F(SoundexEncoding, IgnoresVowelLikeLetters){
+	ASSERT_EQ(soundex.encode("Baeiouhycdl"), std::string("B234"));
+}
+
+TEST_F(SoundexEncoding, CombinesDuplicateEncodings){
+	ASSERT_EQ(soundex.encodedDigits('b'), soundex.encodedDigits('f'));
+	ASSERT_EQ(soundex.encodedDigits('c'), soundex.encodedDigits('g'));
+	ASSERT_EQ(soundex.encodedDigits('d'), soundex.encodedDigits('t'));
+
+	ASSERT_EQ(soundex.encode("Abfcgdt"), std::string("A123"));
+}
+
 int main(int argc, char ** argv){
 	::testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
