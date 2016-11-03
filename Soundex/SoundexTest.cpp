@@ -52,6 +52,14 @@ TEST_F(SoundexEncoding, IgnoreVowelLikeLetters){
 	ASSERT_EQ(soundex.encode("BaAeEiIoOuUhHyYcdl"), std::string("B234"));
 }
 
+TEST_F(SoundexEncoding, CombinesDuplicateCodesWhen2ndLetterDuplicateslst){
+	ASSERT_EQ(soundex.encode("Bbcd"), std::string("B230"));
+}
+
+TEST_F(SoundexEncoding, DoesNotCombineDuplicateEncodingsSeparatedByVowels){
+	ASSERT_EQ(soundex.encode("Jbob"), std::string("J110"));
+}
+
 int main(int argc, char ** argv){
 	::testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
