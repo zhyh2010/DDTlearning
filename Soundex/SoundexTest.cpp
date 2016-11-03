@@ -21,6 +21,12 @@ TEST_F(SoundexEncoding, ReplaceConsonantsWithAppropriateDigits){
 	EXPECT_EQ(soundex.encode("Ac"), std::string("A200"));
 	EXPECT_EQ(soundex.encode("Ad"), std::string("A300"));
 	EXPECT_EQ(soundex.encode("Ax"), std::string("A200"));
+	EXPECT_EQ(soundex.encode("A@"), std::string("A000"));
+	EXPECT_EQ(soundex.encode("AB"), std::string("A000"));
+}
+
+TEST_F(SoundexEncoding, DISABLED_ReplacesMultipleConsonantsWithDigits){
+	ASSERT_EQ(soundex.encode("Acdl"), std::string("A234"));
 }
 
 int main(int argc, char ** argv){

@@ -16,10 +16,15 @@ private:
 		return word.substr(0, 1);
 	}
 
+	std::string tail(const std::string & word) const{
+		return word.substr(1);
+	}
+
 	std::string encodedDigits(const std::string & word) const{
-		if (word.length() > 1)
-			return encodedDigits(word[1]);
-		return "";
+		std::string encoding;
+		for (auto letter : word)
+			encoding = encodedDigits(letter);
+		return encoding;
 	}
 
 	std::string encodedDigits(char letter) const{
@@ -32,7 +37,8 @@ private:
 			{ 'm', "5" }, { 'n', "5" },
 			{ 'r', "6" }
 		};
-		return encodings.find(letter)->second;
+		auto it = encodings.find(letter);
+		return it == encodings.end() ? "" : it->second;
 	}
 
 	std::string zeroPad(const std::string & word) const{
