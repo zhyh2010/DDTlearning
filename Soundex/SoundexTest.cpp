@@ -17,7 +17,10 @@ TEST_F(SoundexEncoding, PadsWithZerosToEnsureThreeDigits){
 }
 
 TEST_F(SoundexEncoding, ReplaceConsonantsWithAppropriateDigits){
-	ASSERT_EQ(soundex.encode("Ab"), std::string("A100"));
+	EXPECT_EQ(soundex.encode("Ab"), std::string("A100"));
+	EXPECT_EQ(soundex.encode("Ac"), std::string("A200"));
+	EXPECT_EQ(soundex.encode("Ad"), std::string("A300"));
+	EXPECT_EQ(soundex.encode("Ax"), std::string("A200"));
 }
 
 int main(int argc, char ** argv){
