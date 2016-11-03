@@ -22,7 +22,6 @@ TEST_F(SoundexEncoding, ReplaceConsonantsWithAppropriateDigits){
 	EXPECT_EQ(soundex.encode("Ad"), std::string("A300"));
 	EXPECT_EQ(soundex.encode("Ax"), std::string("A200"));
 	EXPECT_EQ(soundex.encode("A@"), std::string("A000"));
-	EXPECT_EQ(soundex.encode("AB"), std::string("A000"));
 }
 
 TEST_F(SoundexEncoding, ReplacesMultipleConsonantsWithDigits){
@@ -43,6 +42,14 @@ TEST_F(SoundexEncoding, CombinesDuplicateEncodings){
 	ASSERT_EQ(soundex.encodedDigits('d'), soundex.encodedDigits('t'));
 
 	ASSERT_EQ(soundex.encode("Abfcgdt"), std::string("A123"));
+}
+
+TEST_F(SoundexEncoding, UppercasesFirstLetter){
+	ASSERT_EQ(soundex.encode("abcd").substr(0, 1), std::string("A"));
+}
+
+TEST_F(SoundexEncoding, IgnoreVowelLikeLetters){
+	ASSERT_EQ(soundex.encode("BaAeEiIoOuUhHyYcdl"), std::string("B234"));
 }
 
 int main(int argc, char ** argv){
