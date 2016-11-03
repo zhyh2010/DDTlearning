@@ -25,8 +25,12 @@ TEST_F(SoundexEncoding, ReplaceConsonantsWithAppropriateDigits){
 	EXPECT_EQ(soundex.encode("AB"), std::string("A000"));
 }
 
-TEST_F(SoundexEncoding, DISABLED_ReplacesMultipleConsonantsWithDigits){
+TEST_F(SoundexEncoding, ReplacesMultipleConsonantsWithDigits){
 	ASSERT_EQ(soundex.encode("Acdl"), std::string("A234"));
+}
+
+TEST_F(SoundexEncoding, LimitsLengthToFourCharacters){
+	ASSERT_EQ(soundex.encode("Dcdlb").length(), 4u);
 }
 
 int main(int argc, char ** argv){

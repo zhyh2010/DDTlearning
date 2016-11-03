@@ -8,7 +8,7 @@ class Soundex{
 	static const size_t MaxCodeLength{ 4 };
 public:
 	std::string encode(const std::string & word) const{
-		return zeroPad(head(word) + encodedDigits(word));
+		return zeroPad(head(word) + encodedDigits(tail(word)));
 	}
 
 private:
@@ -22,9 +22,15 @@ private:
 
 	std::string encodedDigits(const std::string & word) const{
 		std::string encoding;
-		for (auto letter : word)
-			encoding = encodedDigits(letter);
+		for (auto letter : word){
+			if (isComplete(encoding)) break;
+			encoding += encodedDigits(letter);
+		}			
 		return encoding;
+	}
+
+	bool isComplete(const std::string & encoding) const{
+		return encoding.length() == MaxCodeLength - 1;
 	}
 
 	std::string encodedDigits(char letter) const{
